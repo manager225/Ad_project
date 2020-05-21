@@ -25,16 +25,24 @@
         </v-form>
         <v-layout row>
           <v-flex xs12>
-            <v-btn class="warning mt-3">
-              Upload
+            <v-btn class="warning mt-3" @click="triggerUpload">
+              Upload img
               <v-icon right dark>mdi-cloud-upload</v-icon>
             </v-btn>
+            <input ref="fileInput"
+                   type="file"
+                   style="display:none"
+                   accept="image/*"
+                   @change="onFileChange"
+            >
           </v-flex>
         </v-layout>
         <v-layout row>
           <v-flex xs12>
-            <img src="" height="100"
-                 class="mt-2">
+            <img :src="imageSrc" height="100"
+                 class="mt-2"
+                 v-if="imageSrc"
+            >
           </v-flex>
         </v-layout>
         <v-layout row>
@@ -51,7 +59,7 @@
             <v-btn class="success"
                    @click="createAd"
                    :loading="loading"
-                   :disabled="!valid || loading"
+                   :disabled="!valid || !image || loading"
             >Create ad</v-btn>
           </v-flex>
         </v-layout>
@@ -67,7 +75,9 @@ export default {
       title: '',
       description: '',
       promo: false,
-      valid: false
+      valid: false,
+      image: null,
+      imageSrc: ''
     }
   },
   computed: {
@@ -77,12 +87,12 @@ export default {
   },
   methods: {
     createAd () {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.image) {
         const ad = {
           title: this.title,
           description: this.description,
           promo: this.promo,
-          imageSrc: 'https://monsterlessons.com/api/storage/uploads/posters/8a29c734-b15a-408b-ad4f-e6fb0913387e/poster.png'
+          image: this.image
         }
         this.$store.dispatch('createAd', ad)
           .then(() => {
@@ -90,6 +100,18 @@ export default {
           })
           .catch(() => {})
       }
+    },
+    triggerUpload () {
+      this.$refs.fileInput.click()
+    },
+    onFileChange (event) {
+      const file = event.target.files[0]
+      const reader = new FileReader()
+      reader.onload = e => {
+        this.imageSrc = reader.result
+      }
+      reader.readAsDataURL(file)
+      this.image = file
     }
   }
 }

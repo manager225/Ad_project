@@ -6,6 +6,7 @@
       >
         <v-card
           class="mx-auto"
+          v-if="!loading"
         >
           <v-img
             :src="ad.imageSrc"
@@ -20,12 +21,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              text
-              class="warning"
-            >
-              Edit
-            </v-btn>
+            <app-edit-ad-modal :ad="ad" class="mr-2" v-if="isOwner"></app-edit-ad-modal>
 
             <v-btn
               raised
@@ -35,19 +31,38 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+        <div v-else class="text-center">
+          <v-progress-circular
+            :size="100"
+            :width="4"
+            color="purple"
+            indeterminate
+          ></v-progress-circular>
+        </div>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
+import EditAdModal from './EditAdModal'
+
 export default {
   props: ['id'],
   computed: {
     ad () {
       const id = this.id
       return this.$store.getters.adById(id)
+    },
+    loading () {
+      return this.$store.getters.loading
+    },
+    isOwner () {
+      return this.ad.ownerId === this.$store.getters.user.id
     }
+  },
+  components: {
+    appEditAdModal: EditAdModal
   }
 }
 </script>
