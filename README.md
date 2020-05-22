@@ -3,7 +3,7 @@
 ## Проект создан с vue.js + vuetify + firebase
 
 ### В проекте реализована авторизация и регистрация с помощью firebase, добавление нового объявления с возможностью редактирования.
-### ![img project](https://i.imgur.com/OissklX.gif)
+
 
 ## Project setup
 ```
