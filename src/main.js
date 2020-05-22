@@ -3,10 +3,13 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import BuyModalComponent from './components/Shared/BuyModal'
 import 'vue-material-design-icons/styles.css'
 import 'material-design-icons'
 import * as fb from 'firebase'
 import vuetify from './plugins/vuetify'
+
+Vue.component('app-buy-modal', BuyModalComponent)
 
 Vue.config.productionTip = false
 
