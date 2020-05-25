@@ -3,7 +3,7 @@
 ## Проект создан с vue.js + vuetify + firebase
 
 ### В проекте реализована авторизация и регистрация с помощью firebase, добавление нового объявления с возможностью редактирования.
-### ![My project](https://youtu.be/in4j7UsJv3o)
+### [My project](https://youtu.be/in4j7UsJv3o)
 
 
 ## Project setup
